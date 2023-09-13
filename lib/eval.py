@@ -26,7 +26,7 @@ def eval():
     for metric_name in config['metrics']:
         metrics[metric_name] = METRICS[metric_name](data['test_y'], preds)
 
-    save_dict(metrics, 'data/eval/metrics.json')
+    save_dict(metrics, 'data/metrics.json')
 
     sns.heatmap(pd.DataFrame(data['test_x']).corr())
     plt.savefig('data/eval/heatmap.png')
