@@ -1,0 +1,48 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: PYTHONPATH="." python lib/train.py --config-path params.yaml
+    deps:
+    - path: lib/train.py
+      hash: md5
+      md5: bd05ccfaa0fc50ebb995aead2572adbf
+      size: 2199
+    params:
+      params.yaml:
+        train:
+          test_size: 0.2
+    outs:
+    - path: data/train
+      hash: md5
+      md5: 6e76ab744fa623d2cc5108e9d07b0660.dir
+      size: 16603
+      nfiles: 4
+  eval:
+    cmd: PYTHONPATH="." python lib/eval.py --config-path params.yaml
+    deps:
+    - path: data/train
+      hash: md5
+      md5: 6e76ab744fa623d2cc5108e9d07b0660.dir
+      size: 16603
+      nfiles: 4
+    - path: lib/eval.py
+      hash: md5
+      md5: 660dd72c84e737325437cf2480670bd9
+      size: 1016
+    params:
+      params.yaml:
+        eval:
+          metrics:
+          - precision
+          - recall
+          - accuracy
+    outs:
+    - path: data/eval
+      hash: md5
+      md5: d18ca6359f4d5babaa58d2f31e176a75.dir
+      size: 10739
+      nfiles: 1
+    - path: data/metrics.json
+      hash: md5
+      md5: 9062e6e94d7fc08a378f7eaa4ea33dd0
+      size: 95

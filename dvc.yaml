@@ -1,0 +1,21 @@
+stages:
+  train:
+    cmd: PYTHONPATH="." python lib/train.py --config-path params.yaml
+    params:
+      - train
+    deps:
+      - lib/train.py
+    outs:
+      - data/train
+
+  eval:
+    cmd: PYTHONPATH="." python lib/eval.py --config-path params.yaml
+    params:
+      - eval
+    deps:
+      - lib/eval.py
+      - data/train
+    outs:
+      - data/eval
+    metrics:
+      - data/metrics.json
